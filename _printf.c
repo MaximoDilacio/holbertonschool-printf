@@ -7,12 +7,12 @@
  * imprimir_cadena - Imprime una cadena de caracteres.
  * @cadena: Puntero a la cadena a imprimir.
  */
-void imprimir_cadena(const char *cadena)
+void imprimir_string(const char *string)
 {
-	while (*cadena)
+	while (*string)
 	{
-		write(1, cadena, 1);
-		cadena++;
+		write(1, string, 1);
+		string++;
 	}
 }
 
@@ -39,44 +39,6 @@ void imprimir_numero(int numero)
 	{
 		buffer[indice++] = '-';
 	}
-	while (indice--)
-	{
-		write(1, &buffer[indice], 1);
-	}
-}
-
-/**
- * imprimir_unsigned - Imprime un número sin signo.
- * @numero: Número sin signo a imprimir.
- */
-void imprimir_unsigned(unsigned int numero)
-{
-	char buffer[12];
-	int indice = 0;
-
-	do {
-		buffer[indice++] = (numero % 10) + '0';
-		numero /= 10;
-	} while (numero > 0);
-	while (indice--)
-	{
-		write(1, &buffer[indice], 1);
-	}
-}
-
-/**
- * imprimir_octal - Imprime un número en formato octal.
- * @numero: Número sin signo a imprimir en octal.
- */
-void imprimir_octal(unsigned int numero)
-{
-	char buffer[12];
-	int indice = 0;
-
-	do {
-		buffer[indice++] = (numero % 8) + '0';
-		numero /= 8;
-	} while (numero > 0);
 	while (indice--)
 	{
 		write(1, &buffer[indice], 1);
@@ -145,12 +107,6 @@ int _printf(const char *formato, ...)
 			case 'i':
 				imprimir_numero(va_arg(argumentos, int));
 				break;
-			case 'u':
-				imprimir_unsigned(va_arg(argumentos, unsigned int));
-				break;
-			case 'o':
-				imprimir_octal(va_arg(argumentos, unsigned int));
-				break;
 			case 'x':
 				imprimir_hexadecimal(va_arg(argumentos, unsigned int), 0);
 				break;
@@ -158,7 +114,7 @@ int _printf(const char *formato, ...)
 				imprimir_hexadecimal(va_arg(argumentos, unsigned int), 1);
 				break;
 			case 's':
-				imprimir_cadena(va_arg(argumentos, char *));
+				imprimir_string(va_arg(argumentos, char *));
 				break;
 			case 'c':
 			{
