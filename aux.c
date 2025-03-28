@@ -7,65 +7,77 @@ int _putchar(char c)
     return write(1, &c, 1);
 }
 
-void imprimir_string(const char *string)
+int imprimir_string(char *string)
 {
+    int count = 0;
+
+    if (!string)
+        string = "(null)"; /* Manejo de puntero nulo */
+
     while (*string)
     {
         _putchar(*string);
         string++;
+        count++;
     }
+
+    return count;
 }
 
-void imprimir_numero(int numero)
+int imprimir_numero(int n)
 {
-    char buffer[12];
-    int indice = 0;
-    int es_negativo = 0;
-
-    if (numero < 0)
+    int caracteres = 0;
+    if (n < 0)
     {
-        es_negativo = 1;
-        numero = -numero;
+        _putchar('-');
+        n = -n;
+        caracteres++;
     }
-    do {
-        buffer[indice++] = (numero % 10) + '0';
-        numero /= 10;
-    } while (numero > 0);
-    if (es_negativo)
-    {
-        buffer[indice++] = '-';
-    }
-    while (indice--)
-    {
-        _putchar(buffer[indice]);
-    }
+    if (n / 10)
+        caracteres += imprimir_numero(n / 10);
+    _putchar(n % 10 + '0');
+    caracteres++;
+    return caracteres;
 }
 
-void imprimir_hexadecimal(unsigned int numero, int mayuscula)
+int imprimir_hexadecimal(unsigned int numero, int mayuscula)
 {
-    char buffer[12];
-    int indice = 0;
-    char base = mayuscula ? 'A' : 'a';
+    int count = 0;
+    char buffer[16];
+    int i = 0;
+    char *hex = mayuscula ? "0123456789ABCDEF" : "0123456789abcdef";
 
-    do {
-        int digito = numero % 16;
-        if (digito < 10)
-            buffer[indice++] = digito + '0';
-        else
-            buffer[indice++] = digito - 10 + base;
+    if (numero == 0)
+    {
+        _putchar('0');
+        return 1;
+    }
+
+    while (numero > 0)
+    {
+        buffer[i++] = hex[numero % 16];
         numero /= 16;
-    } while (numero > 0);
-
-    while (indice--)
-    {
-        _putchar(buffer[indice]);
     }
+
+    while (i--)
+    {
+        _putchar(buffer[i]);
+        count++;
+    }
+
+    return count;
 }
 
-void imprimir_direccion(void *puntero)
+int imprimir_direccion(void *puntero)
 {
-    uintptr_t direccion = (uintptr_t)puntero;
-    imprimir_string("0x");
-    imprimir_hexadecimal(direccion, 0);
-}
+    unsigned long int addr = (unsigned long int)puntero;
+    int count = 0;
 
+    if (!puntero)
+        return imprimir_string("(nil)");
+
+    count += imprimir_string("0x");
+    count += imprimir_hexadecimal(addr, 0);
+
+    return count;
+}

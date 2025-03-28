@@ -1,9 +1,10 @@
 #include "main.h"
+#include <stdarg.h>
 
 int _printf(const char *formato, ...)
 {
     va_list argumentos;
-    int caracteres = 0;
+    int caracteres = 0, impresos = 0;
 
     va_start(argumentos, formato);
     while (*formato)
@@ -11,15 +12,17 @@ int _printf(const char *formato, ...)
         if (*formato == '%')
         {
             formato++;
-            caracteres += manejar_formato(*formato, argumentos);
+            impresos = manejar_formato(*formato, argumentos);
+            caracteres += impresos;
         }
         else
         {
             _putchar(*formato);
-	    caracteres++;
+            caracteres++;
         }
         formato++;
     }
     va_end(argumentos);
-    return (caracteres);
+    return caracteres;
 }
+

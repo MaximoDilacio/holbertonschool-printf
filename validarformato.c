@@ -1,3 +1,6 @@
+#include "main.h"
+#include <stdarg.h>
+
 int manejar_formato(char formato, va_list argumentos)
 {
     int caracteres = 0;
