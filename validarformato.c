@@ -1,6 +1,5 @@
 #include "main.h"
 #include <stdarg.h>
-
 int manejar_formato(char formato, va_list argumentos)
 {
     int count = 0;
@@ -30,7 +29,7 @@ int manejar_formato(char formato, va_list argumentos)
         count += _putchar('%');
         break;
     default:
-        count += _putchar('%');
+        count += _putchar('%'); 
         count += _putchar(formato);
     }
     return count;

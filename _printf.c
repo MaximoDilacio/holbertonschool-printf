@@ -4,7 +4,7 @@
 int _printf(const char *format, ...)
 {
     va_list argumentos;
-    int count = 0;
+    int impresos = 0;
 
     if (!format)
         return (-1);
@@ -13,21 +13,22 @@ int _printf(const char *format, ...)
 
     while (*format)
     {
-        if (*format == '%')
+        if (*format == '%')  
         {
-            format++;
+            format++;  
             if (*format == '\0')
-                break;
-            count += manejar_formato(*format, argumentos);
+                return (-1);
+
+            impresos += manejar_formato(*format, argumentos);
         }
         else
         {
             _putchar(*format);
-            count++;
+            impresos++;
         }
         format++;
     }
 
     va_end(argumentos);
-    return count;
+    return impresos;
 }
