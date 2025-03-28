@@ -11,14 +11,14 @@ int _printf(const char *formato, ...)
         if (*formato == '%')
         {
             formato++;
-            manejar_formato(*formato, argumentos);
+            caracteres += manejar_formato(*formato, argumentos);
         }
         else
         {
             _putchar(*formato);
+	    caracteres++;
         }
         formato++;
-        caracteres++;
     }
     va_end(argumentos);
     return (caracteres);
