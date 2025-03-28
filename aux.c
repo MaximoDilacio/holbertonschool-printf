@@ -98,7 +98,7 @@ int imprimir_hexadecimal(unsigned int numero, int mayuscula)
 }
 
 /**
- * imprimir_direccion - Convierte una dirección de memoria a formato hexadecimal
+ * imprimir_direccion - Convierte una dirección de memoria a formato head
  * y la imprime
  * @puntero: La dirección de memoria a imprimir
  *
