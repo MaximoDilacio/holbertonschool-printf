@@ -1,28 +1,33 @@
 #include "main.h"
 #include <stdarg.h>
 
-int _printf(const char *formato, ...)
+int _printf(const char *format, ...)
 {
     va_list argumentos;
-    int caracteres = 0, impresos = 0;
+    int count = 0;
 
-    va_start(argumentos, formato);
-    while (*formato)
+    if (!format)
+        return (-1);
+
+    va_start(argumentos, format);
+
+    while (*format)
     {
-        if (*formato == '%')
+        if (*format == '%')
         {
-            formato++;
-            impresos = manejar_formato(*formato, argumentos);
-            caracteres += impresos;
+            format++;
+            if (*format == '\0')
+                break;
+            count += manejar_formato(*format, argumentos);
         }
         else
         {
-            _putchar(*formato);
-            caracteres++;
+            _putchar(*format);
+            count++;
         }
-        formato++;
+        format++;
     }
-    va_end(argumentos);
-    return caracteres;
-}
 
+    va_end(argumentos);
+    return count;
+}
